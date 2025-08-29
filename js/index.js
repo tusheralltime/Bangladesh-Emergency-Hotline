@@ -69,3 +69,8 @@ for (let button of callButtons) {
     historyList.prepend(div);
   });
 }
+
+// History Clear
+getElement("clear-history").addEventListener("click", function () {
+  getElement("history-list").innerHTML = "";
+});
