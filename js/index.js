@@ -28,3 +28,44 @@ for (let button of copyButtons) {
     alert(`Number ${helplineNumber} copied!`);
   });
 }
+// Call Button
+const callButtons = document.getElementsByClassName("call-button");
+for (let button of callButtons) {
+  button.addEventListener("click", function () {
+    if (coinCount < 20) {
+      alert("Finished coins! Please recharge.");
+      return;
+    }
+
+    const card = button.parentNode.parentNode;
+    const serviceName = card.querySelector(".helpline-title").innerText;
+    const number = card.querySelector(".helpline-number").innerText;
+
+    coinCount = coinCount - 20;
+    getElement("coin-count").innerText = coinCount;
+
+    alert(`Calling ${serviceName} at ${number}`);
+
+    // add to history
+    const historyList = getElement("history-list");
+    const div = document.createElement("div");
+    div.className =
+      "bg-gray-100 p-3 rounded-md flex justify-between items-center mb-2";
+
+    // time (AM/PM) add
+    const time = new Date().toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    div.innerHTML = `
+      <div>
+        <p class="font-bold">${serviceName}</p>
+        <p class="text-sm text-gray-700">${number}</p>
+      </div>
+      <span class="text-sm text-gray-600">${time}</span>
+    `;
+    historyList.prepend(div);
+  });
+}
